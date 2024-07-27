@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -8,7 +7,11 @@ class Comment {
   final String email;
   final String body;
 
-  Comment({required this.name, required this.email, required this.body});
+  Comment({
+    required this.name,
+    required this.email,
+    required this.body,
+  });
 
   factory Comment.fromJson(Map<String, dynamic> json) {
     return Comment(
@@ -30,6 +33,7 @@ class CommentProvider with ChangeNotifier {
 
   Future<void> fetchComments() async {
     _isLoading = true;
+    _errorMessage = null; // Clear any previous errors
     notifyListeners();
 
     try {
@@ -39,13 +43,13 @@ class CommentProvider with ChangeNotifier {
         final List<dynamic> commentJson = json.decode(response.body);
         _comments = commentJson.map((json) => Comment.fromJson(json)).toList();
       } else {
-        _errorMessage = 'Failed to load comments';
+        _errorMessage = 'Failed to load comments: ${response.statusCode}';
       }
     } catch (error) {
-      _errorMessage = 'An error occurred';
+      _errorMessage = 'An error occurred: $error';
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-
-    _isLoading = false;
-    notifyListeners();
   }
 }

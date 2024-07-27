@@ -47,71 +47,89 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Expanded(
                 child: commentProvider.isLoading
-                    ? const CircularProgressIndicator()
+                    ? const CircularProgressIndicator(
+                        color: Color(0xFF2160C4),
+                      )
                     : commentProvider.errorMessage != null
-                    ? Text('Error: ${commentProvider.errorMessage}')
-                    : ListView.builder(
-                  itemCount: commentProvider.comments.length,
-                  itemBuilder: (context, index) {
-                    final comment = commentProvider.comments[index];
-                    return Padding(padding: EdgeInsets.fromLTRB(5.0, 0.0, 20.0, 10.0),
-                        child: Card(
-                          elevation: 5,
-                          color: Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10.0, 16.0, 0.0, 10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: circularAvatarBackgroundColor,
-                                      radius: 27,
-                                      child:UiText(
-                                        sTextName: comment.email[0].toUpperCase(),
-                                        dTextSize: 20,
-                                        colorOfText: Colors.black,
-                                        iBoldness: 6,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Expanded(
+                        ? UiText(
+                            sTextName: 'Error: ${commentProvider.errorMessage}',
+                            dTextSize: 20,
+                            colorOfText: Colors.black,
+                            iBoldness: 6,
+                          )
+                        : ListView.builder(
+                            itemCount: commentProvider.comments.length,
+                            itemBuilder: (context, index) {
+                              final comment = commentProvider.comments[index];
+                              return Padding(
+                                  padding:
+                                      EdgeInsets.fromLTRB(5.0, 0.0, 20.0, 10.0),
+                                  child: Card(
+                                    elevation: 5,
+                                    color: Colors.white,
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10.0, 16.0, 0.0, 10.0),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
-                                          UiText(
-                                            sTextName: 'Name: ${comment.name}',
-                                            dTextSize: 16,
-                                            colorOfText: Colors.grey,
-                                            iBoldness: 5,
-                                          ),
-                                          UiText(
-                                            sTextName: 'Email: ${comment.email}',
-                                            dTextSize: 16,
-                                            colorOfText: Colors.black,
-                                            iBoldness: 6,
-                                          ),
-                                          const SizedBox(height: 10),
-                                          UiText(
-                                            sTextName: comment.body,
-                                            dTextSize: 14,
-                                            colorOfText: Colors.black,
-                                            iBoldness: 4,
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              CircleAvatar(
+                                                backgroundColor:
+                                                    circularAvatarBackgroundColor,
+                                                radius: 27,
+                                                child: UiText(
+                                                  sTextName: comment.email[0]
+                                                      .toUpperCase(),
+                                                  dTextSize: 20,
+                                                  colorOfText: Colors.black,
+                                                  iBoldness: 6,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    UiText(
+                                                      sTextName:
+                                                          'Name: ${comment.name}',
+                                                      dTextSize: 16,
+                                                      colorOfText: Colors.grey,
+                                                      iBoldness: 5,
+                                                    ),
+                                                    UiText(
+                                                      sTextName:
+                                                          'Email: ${comment.email}',
+                                                      dTextSize: 16,
+                                                      colorOfText: Colors.black,
+                                                      iBoldness: 6,
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    UiText(
+                                                      sTextName: comment.body,
+                                                      dTextSize: 14,
+                                                      colorOfText: Colors.black,
+                                                      iBoldness: 4,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  ));
+                            },
                           ),
-                        ));
-                  },
-                ),
               ),
             ],
           ),

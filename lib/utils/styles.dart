@@ -59,38 +59,48 @@ class _UiTextState extends State<UiText> {
 class UiTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
+  final String? Function(String?)? validator;
+
   const UiTextField({
     super.key,
     required this.hintText,
     required this.controller,
+    this.validator,
   });
-
   @override
   Widget build(BuildContext context) {
+    TextStyle kTextStyle = GoogleFonts.poppins(
+      fontSize: 14,
+      color: Colors.black,
+      fontWeight: FontWeight.w500,
+    );
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 25.0, 15.0),
-      child: CupertinoTextField(
+      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 25.0, 10.0),
+      child: TextFormField(
         controller: controller,
-        padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-        placeholder: hintText,
-        placeholderStyle: TextStyle(
-          fontFamily: 'Poppins',
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          hintText: hintText,
+          hintStyle: kTextStyle,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.0),
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 2,
-              blurRadius: 5,
-            ),
-          ],
-        ),
+        validator: validator,
       ),
     );
   }
 }
+
 
