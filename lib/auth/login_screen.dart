@@ -1,5 +1,6 @@
 import 'package:comments/Homescreen.dart';
 import 'package:comments/auth/signup_screen.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
@@ -87,11 +88,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             onPressed: () async {
                               if (formKey.currentState?.validate() ?? false) {
+
+                                CoolAlert.show(
+                                  context: context,
+                                  type: CoolAlertType.success,
+                                  text: "Logging in,Please wait!!",
+                                );
+
                                 try {
                                   await authProvider.signIn(
                                     emailController.text,
                                     passwordController.text,
                                   );
+
+                                  Navigator.of(context).pop();
+
                                   MotionToast.success(
                                     description: Text("Login Successful"),
                                   ).show(context);
@@ -101,6 +112,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     MaterialPageRoute(builder: (context) => HomeScreen()),
                                   );
                                 } catch (e) {
+
+                                  Navigator.of(context).pop();
+
                                   MotionToast.error(
                                     description: Text("Error: $e"),
                                   ).show(context);

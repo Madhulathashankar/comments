@@ -1,4 +1,3 @@
-// home_screen.dart
 import 'package:comments/provider/comment_provider.dart';
 import 'package:comments/utils/color_const.dart';
 import 'package:comments/utils/styles.dart';
@@ -12,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   void initState() {
     super.initState();
@@ -20,7 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final commentProvider = Provider.of<CommentProvider>(context);
+
+    final commentProvider = Provider.of<CommentProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: kBlueColor,
         automaticallyImplyLeading: false,
       ),
+
       body: Container(
         color: backgroundColor,
         child: Padding(
@@ -46,90 +48,122 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: commentProvider.isLoading
-                    ? const CircularProgressIndicator(
-                        color: Color(0xFF2160C4),
-                      )
-                    : commentProvider.errorMessage != null
-                        ? UiText(
-                            sTextName: 'Error: ${commentProvider.errorMessage}',
-                            dTextSize: 20,
-                            colorOfText: Colors.black,
-                            iBoldness: 6,
-                          )
-                        : ListView.builder(
-                            itemCount: commentProvider.comments.length,
-                            itemBuilder: (context, index) {
-                              final comment = commentProvider.comments[index];
-                              return Padding(
-                                  padding:
-                                      EdgeInsets.fromLTRB(5.0, 0.0, 20.0, 10.0),
-                                  child: Card(
-                                    elevation: 5,
-                                    color: Colors.white,
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10.0, 16.0, 0.0, 10.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                child: StreamBuilder<List<Comment>>(
+                  stream: commentProvider.commentsStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: UiText(
+                          sTextName: 'Error: ${snapshot.error}',
+                          dTextSize: 20,
+                          colorOfText: Colors.black,
+                          iBoldness: 6,
+                        ),
+                      );
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return Center(
+                        child: UiText(
+                          sTextName: 'No comments available',
+                          dTextSize: 20,
+                          colorOfText: Colors.black,
+                          iBoldness: 3,
+                        ),
+                      );
+                    } else {
+                      return ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          final comment = snapshot.data![index];
+                          return Padding(
+                            padding: EdgeInsets.fromLTRB(0.0, 0.0, 13.0, 10.0),
+                            child: Card(
+                              elevation: 5,
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(10.0, 16.0, 0.0, 10.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: circularAvatarBackgroundColor,
+                                          radius: 27,
+                                          child: UiText(
+                                            sTextName: comment.email[0].toUpperCase(),
+                                            dTextSize: 20,
+                                            colorOfText: Colors.black,
+                                            iBoldness: 6,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              CircleAvatar(
-                                                backgroundColor:
-                                                    circularAvatarBackgroundColor,
-                                                radius: 27,
-                                                child: UiText(
-                                                  sTextName: comment.email[0]
-                                                      .toUpperCase(),
-                                                  dTextSize: 20,
-                                                  colorOfText: Colors.black,
-                                                  iBoldness: 6,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 10),
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                              SingleChildScrollView(
+                                                scrollDirection: Axis.horizontal,
+                                                child: Row(
                                                   children: [
                                                     UiText(
-                                                      sTextName:
-                                                          'Name: ${comment.name}',
+                                                      sTextName: 'Name: ',
                                                       dTextSize: 16,
                                                       colorOfText: Colors.grey,
                                                       iBoldness: 5,
                                                     ),
                                                     UiText(
-                                                      sTextName:
-                                                          'Email: ${comment.email}',
+                                                      sTextName: comment.name,
                                                       dTextSize: 16,
                                                       colorOfText: Colors.black,
                                                       iBoldness: 6,
                                                     ),
-                                                    const SizedBox(height: 10),
-                                                    UiText(
-                                                      sTextName: comment.body,
-                                                      dTextSize: 14,
-                                                      colorOfText: Colors.black,
-                                                      iBoldness: 4,
-                                                    ),
                                                   ],
                                                 ),
                                               ),
+                                              Row(
+                                                children: [
+                                                  UiText(
+                                                    sTextName: 'Email: ',
+                                                    dTextSize: 16,
+                                                    colorOfText: Colors.grey,
+                                                    iBoldness: 5,
+                                                  ),
+                                                  UiText(
+                                                    sTextName: comment.email,
+                                                    dTextSize: 16,
+                                                    colorOfText: Colors.black,
+                                                    iBoldness: 6,
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 10),
+                                              UiText(
+                                                sTextName: comment.body,
+                                                dTextSize: 14,
+                                                colorOfText: Colors.black,
+                                                iBoldness: 4,
+                                              ),
                                             ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ));
-                            },
-                          ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
               ),
             ],
           ),
@@ -137,7 +171,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }
-
-
