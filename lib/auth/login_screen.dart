@@ -91,14 +91,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                 CoolAlert.show(
                                   context: context,
-                                  type: CoolAlertType.success,
-                                  text: "Logging in,Please wait!!",
+                                  type: CoolAlertType.loading,
+                                  text: "Logging in, please wait...",
                                 );
 
                                 try {
                                   await authProvider.signIn(
-                                    emailController.text,
-                                    passwordController.text,
+                                      emailController.text,
+                                      passwordController.text,
+                                      context
                                   );
 
                                   Navigator.of(context).pop();
@@ -112,7 +113,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     MaterialPageRoute(builder: (context) => HomeScreen()),
                                   );
                                 } catch (e) {
-
                                   Navigator.of(context).pop();
 
                                   MotionToast.error(
@@ -125,6 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
+
                     SizedBox(height: 20.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

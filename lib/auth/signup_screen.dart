@@ -86,7 +86,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: screenHeight / 2.7),
+                    SizedBox(height: screenHeight / 2.5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -100,13 +100,14 @@ class _SignupScreenState extends State<SignupScreen> {
                               colorOfText: Colors.white,
                               iBoldness: 4,
                             ),
+
                             onPressed: () async {
                               if (formKey.currentState?.validate() ?? false) {
 
                                 CoolAlert.show(
                                   context: context,
-                                  type: CoolAlertType.success,
-                                  text: "Please wait while we create your account.",
+                                  type: CoolAlertType.loading,
+                                  text: "Creating account,Please wait!!",
                                 );
 
                                 try {
