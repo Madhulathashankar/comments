@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -23,18 +24,28 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print("Exception $e");
+      throw e;
     }
   }
 
-  Future<void> signIn(String email, String password) async {
+  Future<void> signIn(String email, String password, BuildContext context) async {
     try {
       await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       notifyListeners();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        throw "The password is incorrect. Please try again.";
+      } else if (e.code == 'user-not-found') {
+        throw "No user found with this email. Please check your email.";
+      } else {
+        throw "An error occurred: ${e.message}";
+      }
     } catch (e) {
       print("Exception $e");
+      throw "An unexpected error occurred. Please try again.";
     }
   }
 
