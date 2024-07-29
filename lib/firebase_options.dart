@@ -41,8 +41,8 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: <API_KEY>,
-    appId: '1:783274114460:web:ba121562e41b6c4b135c59',
+    apiKey: "<APP_KEY>",
+    appId: "<APP_Id>",
     messagingSenderId: '783274114460',
     projectId: 'comments-3ac93',
     authDomain: 'comments-3ac93.firebaseapp.com',
@@ -51,16 +51,16 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: <API_KEY>,
-    appId: <APP_Id>,
+    apiKey: "<APP_KEY>",
+    appId: "<APP_Id>",
     messagingSenderId: '783274114460',
     projectId: 'comments-3ac93',
     storageBucket: 'comments-3ac93.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey:<API_KEY>,
-    appId: <APP_Id>,
+    apiKey:"<APP_KEY>",
+    appId:"<APP_Id>",
     messagingSenderId: '783274114460',
     projectId: 'comments-3ac93',
     storageBucket: 'comments-3ac93.appspot.com',
@@ -68,8 +68,8 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey:<API_KEY>,
-    appId: '<APP_Id>',
+    apiKey:"<APP_KEY>",
+    appId: "<APP_Id>",
     messagingSenderId: '783274114460',
     projectId: 'comments-3ac93',
     storageBucket: 'comments-3ac93.appspot.com',
@@ -77,8 +77,8 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: <API_KEY>',
-    appId: <APP_Id>,
+    apiKey: "<APP_KEY>",
+    appId: "<APP_Id>",
     messagingSenderId: '783274114460',
     projectId: 'comments-3ac93',
     authDomain: 'comments-3ac93.firebaseapp.com',
