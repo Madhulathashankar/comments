@@ -41,7 +41,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAJum6-iQvBs2Ika25WS2-axpS_D6k3TmQ',
+    apiKey: <API_KEY>,
     appId: '1:783274114460:web:ba121562e41b6c4b135c59',
     messagingSenderId: '783274114460',
     projectId: 'comments-3ac93',
@@ -51,16 +51,16 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCTj0lotseiKpJQafpMVA5g2O8H-_B3DHQ',
-    appId: '1:783274114460:android:53cace7ccbf3acdf135c59',
+    apiKey: <API_KEY>,
+    appId: <APP_Id>,
     messagingSenderId: '783274114460',
     projectId: 'comments-3ac93',
     storageBucket: 'comments-3ac93.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBiCKS9n78ayGts7ZdmztCwAtJYmmJZXvk',
-    appId: '1:783274114460:ios:e7d72145944c360e135c59',
+    apiKey:<API_KEY>,
+    appId: <APP_Id>,
     messagingSenderId: '783274114460',
     projectId: 'comments-3ac93',
     storageBucket: 'comments-3ac93.appspot.com',
@@ -68,8 +68,8 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBiCKS9n78ayGts7ZdmztCwAtJYmmJZXvk',
-    appId: '1:783274114460:ios:e7d72145944c360e135c59',
+    apiKey:<API_KEY>,
+    appId: '<APP_Id>',
     messagingSenderId: '783274114460',
     projectId: 'comments-3ac93',
     storageBucket: 'comments-3ac93.appspot.com',
@@ -77,8 +77,8 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAJum6-iQvBs2Ika25WS2-axpS_D6k3TmQ',
-    appId: '1:783274114460:web:751e5fa3326947a0135c59',
+    apiKey: <API_KEY>',
+    appId: <APP_Id>,
     messagingSenderId: '783274114460',
     projectId: 'comments-3ac93',
     authDomain: 'comments-3ac93.firebaseapp.com',
